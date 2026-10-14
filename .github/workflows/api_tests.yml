@@ -1,0 +1,49 @@
+name: API Automation Tests (Playwright Python)
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    # Optional scheduled nightly run at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run API Test Suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -m playwright install --with-deps
+
+      - name: Run Playwright API Automation Suite
+        run: |
+          pytest -v -s --html=reports/report.html --self-contained-html
+        env:
+          BASE_URL: https://dummyjson.com
+          AUTH_USERNAME: emilys
+          AUTH_PASSWORD: emilyspass
+          LOG_LEVEL: INFO
+
+      - name: Upload HTML Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-api-test-report
+          path: reports/report.html
+          retention-days: 30
