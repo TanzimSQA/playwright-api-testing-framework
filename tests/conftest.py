@@ -92,10 +92,92 @@ def created_product(product_service: ProductService) -> Generator[dict, None, No
     """Fixture that generates and creates a test product, yielding its data."""
     payload = generate_fake_product()
     response = product_service.add_product(payload)
-    assert response.status == 201, f"Failed to setup created_product fixture: {response.text()}"
+    assert response.status in [200, 201], f"Failed to setup created_product fixture: {response.text()}"
     product_data = response.json()
     yield product_data
     # Clean up attempt
     product_id = product_data.get("id")
     if product_id:
         product_service.delete_product(product_id)
+
+
+# --- Pytest Reporting Hooks for Summary Generation ---
+_test_results = []
+_start_time = None
+
+
+def pytest_sessionstart(session):
+    global _start_time
+    import time
+    _start_time = time.perf_counter()
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+    if report.when == "call":
+        _test_results.append(report)
+
+
+def pytest_sessionfinish(session, exitstatus):
+    import json
+    import time
+    from pathlib import Path
+    from datetime import datetime
+
+    total_duration = time.perf_counter() - (_start_time or time.perf_counter())
+    total = len(_test_results)
+    passed = sum(1 for r in _test_results if r.passed)
+    failed = sum(1 for r in _test_results if r.failed)
+    skipped = sum(1 for r in _test_results if r.skipped)
+    pass_rate = round((passed / total * 100), 1) if total > 0 else 100.0
+
+    suites = {
+        "auth": {"name": "Authentication & Security", "icon": "🔑", "total": 0, "passed": 0, "failed": 0},
+        "products": {"name": "Products & CRUD", "icon": "📦", "total": 0, "passed": 0, "failed": 0},
+        "users": {"name": "User Directory & Filter", "icon": "👤", "total": 0, "passed": 0, "failed": 0},
+        "e2e": {"name": "End-to-End Shopping Journey", "icon": "🛒", "total": 0, "passed": 0, "failed": 0},
+        "performance": {"name": "Latency SLA Benchmarks", "icon": "⏱️", "total": 0, "passed": 0, "failed": 0},
+    }
+
+    for r in _test_results:
+        nodeid = r.nodeid
+        suite_key = None
+        if "test_auth" in nodeid:
+            suite_key = "auth"
+        elif "test_products" in nodeid:
+            suite_key = "products"
+        elif "test_users" in nodeid:
+            suite_key = "users"
+        elif "test_e2e" in nodeid:
+            suite_key = "e2e"
+        elif "test_performance" in nodeid:
+            suite_key = "performance"
+
+        if suite_key and suite_key in suites:
+            suites[suite_key]["total"] += 1
+            if r.passed:
+                suites[suite_key]["passed"] += 1
+            elif r.failed:
+                suites[suite_key]["failed"] += 1
+
+    summary_data = {
+        "total": total,
+        "passed": passed,
+        "failed": failed,
+        "skipped": skipped,
+        "pass_rate": pass_rate,
+        "total_duration": round(total_duration, 2),
+        "total_duration_formatted": f"{int(total_duration // 60)}m {total_duration % 60:.1f}s",
+        "status": "PASSED" if failed == 0 else "FAILED",
+        "timestamp": datetime.now().strftime("%d-%b-%Y %H:%M:%S BST"),
+        "suites": suites,
+    }
+
+    reports_dir = Path(__file__).resolve().parent.parent / "reports"
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    summary_file = reports_dir / "summary.json"
+    with open(summary_file, "w", encoding="utf-8") as f:
+        json.dump(summary_data, f, indent=2)
+

@@ -1,0 +1,48 @@
+{
+  "total": 27,
+  "passed": 27,
+  "failed": 0,
+  "skipped": 0,
+  "pass_rate": 100.0,
+  "total_duration": 13.53,
+  "total_duration_formatted": "0m 13.5s",
+  "status": "PASSED",
+  "timestamp": "14-Oct-2026 23:04:14 BST",
+  "suites": {
+    "auth": {
+      "name": "Authentication & Security",
+      "icon": "\ud83d\udd11",
+      "total": 7,
+      "passed": 7,
+      "failed": 0
+    },
+    "products": {
+      "name": "Products & CRUD",
+      "icon": "\ud83d\udce6",
+      "total": 14,
+      "passed": 14,
+      "failed": 0
+    },
+    "users": {
+      "name": "User Directory & Filter",
+      "icon": "\ud83d\udc64",
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "e2e": {
+      "name": "End-to-End Shopping Journey",
+      "icon": "\ud83d\uded2",
+      "total": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "performance": {
+      "name": "Latency SLA Benchmarks",
+      "icon": "\u23f1\ufe0f",
+      "total": 1,
+      "passed": 1,
+      "failed": 0
+    }
+  }
+}

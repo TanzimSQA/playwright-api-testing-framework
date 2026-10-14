@@ -1,29 +1,44 @@
-# 🚀 Playwright Python API Automation Testing Framework
+# Playwright Python API Automation Testing Framework
 
+[![Playwright Python API Test Automation CI/CD](https://github.com/TanzimSQA/playwright-api-testing-framework/actions/workflows/api_tests.yml/badge.svg)](https://github.com/TanzimSQA/playwright-api-testing-framework/actions/workflows/api_tests.yml)
+[![GitHub Pages Report](https://img.shields.io/badge/Test%20Report-GitHub%20Pages-brightgreen?style=flat&logo=github)](https://tanzimsqa.github.io/playwright-api-testing-framework/)
+[![Schedule](https://img.shields.io/badge/Scheduled%20Run-10%3A00%20AM%20BST%20Everyday-blue)](https://github.com/TanzimSQA/playwright-api-testing-framework/actions)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![Playwright](https://img.shields.io/badge/Playwright-APIRequestContext-2EAD33?logo=playwright&logoColor=white)](https://playwright.dev/python/docs/api-testing)
 [![Pytest](https://img.shields.io/badge/Pytest-8.0%2B-0A9EDC?logo=pytest&logoColor=white)](https://docs.pytest.org/)
 [![Pydantic](https://img.shields.io/badge/Pydantic-v2.0%2B-E92063?logo=pydantic&logoColor=white)](https://docs.pydantic.dev/)
-[![CI/CD](https://img.shields.io/badge/GitHub%20Actions-Automated%20CI-2088FF?logo=github-actions&logoColor=white)](.github/workflows/api_tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-An enterprise-grade, high-performance API automation testing framework built with **Playwright Python** (`APIRequestContext`), **Pytest**, and **Pydantic v2**.
+An enterprise-grade, high-performance REST API test automation framework targeting [DummyJSON](https://dummyjson.com), developed with **Python**, **Playwright** (`APIRequestContext`), **Pytest**, and **Pydantic v2**, following the industry-standard **Service Object Model (SOM)** architecture pattern.
 
-Targeted against the modern RESTful platform [DummyJSON](https://dummyjson.com), this project demonstrates modern SQA best practices including **Service Object Model (SOM)** architecture, strict **Contract/Schema Validation**, **JWT Authentication flows**, **Full CRUD lifecycle testing**, **End-to-End E-Commerce workflows**, **Performance SLA assertions**, and **Continuous Integration (CI/CD)** with interactive HTML test reports.
+> 🌐 **Live Interactive HTML Test Report**: [https://tanzimsqa.github.io/playwright-api-testing-framework/](https://tanzimsqa.github.io/playwright-api-testing-framework/)  
+> ⏰ **Automated Schedule**: Runs automatically every day at **10:00 AM Bangladesh Standard Time (BST, UTC+6)** / `04:00 UTC`.  
+> 📧 **Executive Email Alerts**: Automatically dispatches a responsive HTML KPI metrics report to QA Lead (`tanzimsqa@gmail.com`) upon test completion.
 
 ---
 
-## 🌟 Key Highlights & Engineering Features
+## 🚀 Key Framework Features
 
-- **⚡ Native Playwright APIRequestContext**: Uses Playwright's lightweight, lightning-fast request context without spawning heavy browser instances—ideal for both standalone API testing and unified hybrid UI/API test automation.
-- **🏗️ Service Object Model (SOM) Architecture**: Separation of concerns isolating HTTP mechanics (`ApiClient`), domain business logic (`AuthService`, `ProductService`, `UserService`, `CartService`), and declarative test definitions.
-- **🛡️ Strict Schema & Contract Validation**: Powered by **Pydantic v2** models to validate API response payloads, field types, required properties, and nested structures at runtime.
-- **🔐 JWT Authentication & Authorization Testing**: Full authentication lifecycle tests covering token generation, protected endpoint access (`/auth/me`), invalid token rejection, and unauthorized (401) security checks.
-- **🔄 Complete CRUD & Boundary Testing**: Create, Read, Update (PUT/PATCH), and Delete verification, alongside edge cases, invalid IDs (404), empty inputs (400), and query pagination.
-- **🛒 Real-world E2E Multi-step User Scenarios**: End-to-end user workflows linking login -> profile verification -> catalog search -> cart addition -> price calculation assertions.
-- **⏱️ Performance & Latency SLA Assertions**: Automated benchmarks ensuring response times adhere to strict Service Level Agreements (< 1500ms).
-- **📊 Interactive HTML Test Reporting**: Generates rich self-contained HTML test reports (`reports/report.html`) complete with timings, failure stack traces, and environment metadata.
-- **🤖 GitHub Actions CI/CD Pipeline**: Automated test runs on every push and pull request with automated report artifact archiving.
+- **⚡ Native Playwright APIRequestContext**: Uses Playwright's native HTTP execution engine—delivering fast, lightweight API execution without browser overhead, and ready for hybrid UI/API test scenarios.
+- **🏗️ Service Object Model (SOM) Architecture**: Clean separation between low-level HTTP transport (`ApiClient`), domain business services (`AuthService`, `ProductService`, `UserService`, `CartService`), and test cases.
+- **🛡️ Strict Pydantic v2 Contract Validation**: Deep runtime schema verification of response objects, data types, required attributes, and nested payload structures.
+- **🔐 JWT Authentication & Security Tests**:
+  - Valid user login and Bearer token acquisition.
+  - Authenticated user profile retrieval (`/auth/me`).
+  - Unauthorized access checks (401 Unauthorized for missing or malformed tokens).
+  - Invalid credentials error validation (400 Bad Request).
+- **🔄 Full CRUD & Query Testing**:
+  - Create product with dynamic unique payloads (`POST /products/add`).
+  - Read product details by ID and paginated listings with `limit` and `skip`.
+  - Update product full resource (`PUT /products/{id}`) and partial fields (`PATCH /products/{id}`).
+  - Delete product and verify confirmation flag (`DELETE /products/{id}`).
+  - Search products with keyword filtering (`/products/search?q=phone`).
+  - Category retrieval and category-based filtering (`/products/category/smartphones`).
+- **🛒 End-to-End E-Commerce Workflow**:
+  - Full transactional user journey: Login -> Verify user session -> Search catalog -> Add item to cart -> Validate quantity, subtotal, and discount calculations.
+- **⏱️ Performance & Latency SLA Assertions**: Automated benchmarks ensuring all critical endpoints respond within SLA thresholds (< 1500ms).
+- **📊 Interactive GitHub Pages Reporting**: Every test run produces a self-contained HTML dashboard deployed directly to **GitHub Pages**.
+- **🤖 GitHub Actions CI/CD with Scheduled Runs**: Runs daily at 10:00 AM BST, on every push and pull request, with automated Pages deployment and email alerts.
 
 ---
 
@@ -35,9 +50,9 @@ flowchart TD
         ENV[".env / settings.py"]
     end
 
-    subgraph Core ["🧠 Core Layer"]
+    subgraph Core ["🧠 Core Engine"]
         PW["Playwright sync_api\nAPIRequestContext"]
-        CLIENT["ApiClient (HTTP Methods, Headers, Timing, Logging)"]
+        CLIENT["ApiClient (HTTP Methods, Headers, Latency, Logging)"]
         LOGGER["Structured Logger (Console + File)"]
         PW --> CLIENT
         LOGGER --> CLIENT
@@ -47,7 +62,7 @@ flowchart TD
         AUTH_S["AuthService\n(/auth/login, /auth/me)"]
         PROD_S["ProductService\n(CRUD, Search, Categories)"]
         USER_S["UserService\n(Directory, Filtering)"]
-        CART_S["CartService\n(Add Cart, User Carts)"]
+        CART_S["CartService\n(Add Cart, Calculations)"]
     end
 
     subgraph Schemas ["📐 Schema Contract Validation (Pydantic v2)"]
@@ -65,10 +80,11 @@ flowchart TD
         T_PERF["test_performance.py\n(Latency SLA Benchmarks)"]
     end
 
-    subgraph Output ["📊 Reporting & CI/CD"]
-        REPORT["Interactive HTML Report\n(reports/report.html)"]
-        LOGS["Execution Logs\n(logs/test_execution.log)"]
-        GHA["GitHub Actions CI Pipeline"]
+    subgraph Output ["📊 Reporting & CI/CD Pipeline"]
+        REPORT["Interactive HTML Report\n(reports/index.html)"]
+        PAGES["GitHub Pages\n(tanzimsqa.github.io/playwright-api-testing-framework)"]
+        EMAIL["Email Notifier GUI\n(tanzimsqa@gmail.com)"]
+        GHA["GitHub Actions CI/CD"]
     end
 
     ENV --> Core
@@ -76,7 +92,8 @@ flowchart TD
     Services --> Tests
     Schemas --> Tests
     Tests --> REPORT
-    Tests --> LOGS
+    REPORT --> PAGES
+    Tests --> EMAIL
     Tests --> GHA
 ```
 
@@ -88,7 +105,7 @@ flowchart TD
 playwright-api-testing-framework/
 ├── .github/
 │   └── workflows/
-│       └── api_tests.yml          # GitHub Actions CI/CD automated workflow
+│       └── api_tests.yml          # GitHub Actions CI/CD workflow (Daily 10:00 AM BST)
 ├── config/
 │   ├── __init__.py
 │   └── settings.py                # Environment configuration loader (pydantic/dotenv)
@@ -110,16 +127,19 @@ playwright-api-testing-framework/
 │   └── cart_service.py            # /carts endpoints controller
 ├── utils/
 │   ├── __init__.py
-│   └── data_generator.py          # Dynamic test data & payload generator
-├── tests/                         # Test suites
+│   ├── data_generator.py          # Dynamic test data generator
+│   └── email_notifier.py          # Responsive HTML email notification dispatcher
+├── tests/                         # Pytest test suites
 │   ├── __init__.py
-│   ├── conftest.py                # Pytest fixtures (contexts, clients, auth tokens)
-│   ├── test_auth.py               # Authentication & token verification tests
-│   ├── test_products.py           # Product catalog, CRUD, and category tests
-│   ├── test_users.py              # User directory & query filter tests
-│   ├── test_e2e_scenarios.py      # E2E shopping journey workflow tests
-│   └── test_performance.py       # Response latency SLA tests
-├── reports/                       # Generated HTML test execution reports
+│   ├── conftest.py                # Pytest fixtures & sessionfinish summary hook
+│   ├── test_auth.py               # Authentication & security tests (6 tests)
+│   ├── test_products.py           # Product catalog, CRUD, and category tests (13 tests)
+│   ├── test_users.py              # User directory & query filter tests (4 tests)
+│   ├── test_e2e_scenarios.py      # E2E shopping journey workflow tests (1 test)
+│   └── test_performance.py       # Response latency SLA tests (3 tests)
+├── reports/
+│   ├── index.html                 # Interactive test execution report (GitHub Pages root)
+│   └── summary.json               # Test KPI metrics summary
 ├── logs/                          # Persistent test execution logs
 ├── .env.example                   # Environment variables template
 ├── .gitignore                     # Git ignore rules for Python & Playwright
@@ -174,7 +194,7 @@ Default parameters are pre-configured to point to [DummyJSON](https://dummyjson.
 ```bash
 pytest
 ```
-*An interactive HTML report will be generated at `reports/report.html`.*
+*An interactive HTML report will be generated at `reports/index.html`.*
 
 ### Run Specific Test Categories by Marker
 ```bash
@@ -197,10 +217,9 @@ pytest -m performance
 pytest -m regression
 ```
 
-### Run a Specific Test File
+### Dispatch Email Report Manually
 ```bash
-pytest tests/test_products.py -v
-pytest tests/test_auth.py -v
+python utils/email_notifier.py
 ```
 
 ---
@@ -233,20 +252,28 @@ pytest tests/test_auth.py -v
 
 ---
 
-## 📈 HTML Report Sample
+## 📈 HTML Report & Email Alerts
 
-When tests are executed, `pytest-html` automatically compiles an interactive report:
-- **Location**: `reports/report.html`
-- **Features**: Filter by Passed/Failed/Skipped, execution timeline, request duration statistics, error stack traces, and environment details.
+### 1. Interactive GitHub Pages Dashboard
+The automated test suite deploys live HTML execution reports to GitHub Pages at:
+👉 **[https://tanzimsqa.github.io/playwright-api-testing-framework/](https://tanzimsqa.github.io/playwright-api-testing-framework/)**
+
+### 2. Responsive Email Report GUI
+Every test execution can dispatch a responsive HTML email report directly to the QA Lead (`tanzimsqa@gmail.com`) containing:
+- Health status badge (`ALL API TESTS PASSED (100% HEALTH)`).
+- Executive KPI cards: Total tests, passed count, failed count, pass rate, and execution duration.
+- Per-suite breakdown with pass/fail counts.
+- Direct links to the GitHub Pages report and GitHub Actions run.
 
 ---
 
 ## 🔄 CI/CD Pipeline (GitHub Actions)
 
-This project includes a production-ready GitHub Actions workflow (`.github/workflows/api_tests.yml`):
-- Runs automatically on every **Push** and **Pull Request** to `main`.
-- Can be manually triggered via **Workflow Dispatch**.
-- Automatically sets up Python, installs dependencies, executes test suites, and archives the HTML report as an artifact accessible directly from GitHub.
+This project features an automated GitHub Actions pipeline (`.github/workflows/api_tests.yml`):
+- **Schedule**: Automatically runs everyday at **10:00 AM BST** (`04:00 UTC`).
+- **Triggers**: Also runs on every **Push** and **Pull Request** to `main`, plus manual **Workflow Dispatch**.
+- **Automated Deployment**: Automatically publishes the HTML report to **GitHub Pages**.
+- **Email Notifications**: Automatically alerts the team via SMTP email.
 
 ---
 

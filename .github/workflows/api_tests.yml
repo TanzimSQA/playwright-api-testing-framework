@@ -1,4 +1,4 @@
-name: API Automation Tests (Playwright Python)
+name: Playwright Python API Test Automation CI/CD
 
 on:
   push:
@@ -6,14 +6,24 @@ on:
   pull_request:
     branches: [ main, master ]
   schedule:
-    # Optional scheduled nightly run at 00:00 UTC
-    - cron: '0 0 * * *'
+    # 04:00 UTC is exactly 10:00 AM Bangladesh Standard Time (BST, UTC+6) everyday
+    - cron: '0 4 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   test:
-    name: Run API Test Suite
+    name: Run Automated Playwright API Tests
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout Repository
@@ -25,25 +35,72 @@ jobs:
           python-version: "3.11"
           cache: "pip"
 
-      - name: Install Dependencies
+      - name: Install Python Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          python -m playwright install --with-deps
 
-      - name: Run Playwright API Automation Suite
+      - name: Install Playwright Browsers & Dependencies
         run: |
-          pytest -v -s --html=reports/report.html --self-contained-html
+          playwright install --with-deps
+
+      - name: Run Pytest API Test Suite
         env:
           BASE_URL: https://dummyjson.com
           AUTH_USERNAME: emilys
           AUTH_PASSWORD: emilyspass
           LOG_LEVEL: INFO
+        run: |
+          mkdir -p reports
+          pytest -v -s --html=reports/index.html --self-contained-html
 
-      - name: Upload HTML Test Report
+      - name: Copy Report to test_report.html
+        if: always()
+        run: |
+          cp reports/index.html reports/test_report.html || true
+
+      - name: Send Email Notification to QA Lead (tanzimsqa@gmail.com)
+        if: always()
+        env:
+          SMTP_HOST: smtp.gmail.com
+          SMTP_PORT: "465"
+          SMTP_USER: ${{ secrets.MAIL_USERNAME || secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.MAIL_PASSWORD || secrets.SMTP_PASS }}
+          EMAIL_RECIPIENT: tanzimsqa@gmail.com
+          REPORT_URL: https://tanzimsqa.github.io/playwright-api-testing-framework/
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: |
+          python utils/email_notifier.py
+
+      - name: Upload Test Report Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-api-test-report
-          path: reports/report.html
+          path: reports/
           retention-days: 30
+
+      - name: Setup GitHub Pages
+        if: always()
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages Artifact
+        if: always()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: reports/
+
+  deploy-pages:
+    name: Deploy Live HTML Report to GitHub Pages
+    needs: test
+    if: always()
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
