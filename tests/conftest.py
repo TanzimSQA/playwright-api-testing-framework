@@ -181,3 +181,54 @@ def pytest_sessionfinish(session, exitstatus):
     with open(summary_file, "w", encoding="utf-8") as f:
         json.dump(summary_data, f, indent=2)
 
+
+
+def pytest_html_report_title(report):
+    """Set custom SEO-rich title for pytest-html report."""
+    report.title = "Playwright API Testing Framework Report | Tanzim Rahman (TanzimSQA)"
+
+
+def pytest_html_results_summary(prefix, summary, postfix):
+    """Inject author credentials, canonical link, and TechArticle JSON-LD structured data into HTML report."""
+    from py.xml import html
+    prefix.extend([
+        html.p(
+            html.b("QA Lead: "),
+            "Tanzim Rahman (TanzimSQA) - Software Quality Assurance Engineer at Koy Jabo | ",
+            html.a("Portfolio", href="https://tanzimsqa.github.io/"),
+            " | ",
+            html.a("GitHub", href="https://github.com/TanzimSQA"),
+            " | ",
+            html.a("LinkedIn", href="https://www.linkedin.com/in/tanzimsqa/"),
+            " | ",
+            html.a("Facebook", href="https://www.facebook.com/tanzim.rahman.bpl/"),
+            style="font-size: 13px; color: #3b82f6; margin-bottom: 12px;"
+        ),
+        html.script(
+            """
+            {
+              "@context": "https://schema.org",
+              "@type": "TechArticle",
+              "headline": "Playwright Python API Test Automation Framework Report",
+              "author": {
+                "@type": "Person",
+                "name": "Tanzim Rahman",
+                "alternateName": ["TanzimSQA", "Tanzim Rahman SQA"],
+                "url": "https://tanzimsqa.github.io/",
+                "sameAs": [
+                  "https://github.com/TanzimSQA",
+                  "https://www.linkedin.com/in/tanzimsqa/",
+                  "https://www.facebook.com/tanzim.rahman.bpl/"
+                ]
+              },
+              "publisher": {
+                "@type": "Person",
+                "name": "Tanzim Rahman"
+              },
+              "url": "https://tanzimsqa.github.io/playwright-api-testing-framework/",
+              "description": "Enterprise API test automation report validating REST endpoints, authentication tokens, product CRUD matrices, and SLA performance with Playwright & Python."
+            }
+            """,
+            type="application/ld+json"
+        )
+    ])
