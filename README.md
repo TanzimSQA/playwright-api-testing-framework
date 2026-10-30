@@ -279,9 +279,12 @@ This project features an automated GitHub Actions pipeline (`.github/workflows/a
 
 ## 👨‍💻 Author
 
-**Tanzim SQA**  
-- GitHub: [@TanzimSQA](https://github.com/TanzimSQA)
-- Email: [tanzimsqa@gmail.com](mailto:tanzimsqa@gmail.com)
+**Tanzim Rahman (TanzimSQA)**  
+*Software Quality Assurance (SQA) Engineer*  
+- 🌐 **Portfolio**: [https://tanzimsqa.github.io/](https://tanzimsqa.github.io/)  
+- 💼 **LinkedIn**: [https://www.linkedin.com/in/tanzimsqa/](https://www.linkedin.com/in/tanzimsqa/)  
+- 🐙 **GitHub**: [@TanzimSQA](https://github.com/TanzimSQA)  
+- 📧 **Email**: [tanzimsqa@gmail.com](mailto:tanzimsqa@gmail.com)
 
 ---
 
