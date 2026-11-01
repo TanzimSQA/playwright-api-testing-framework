@@ -280,6 +280,13 @@ This project features an automated GitHub Actions pipeline (`.github/workflows/a
 
 ---
 
+## 📝 Related Technical Publication on LinkedIn
+
+For practical insights on API status code verification and backend automation architectures, read Tanzim Rahman's published technical guide on LinkedIn:
+- 📖 **[HTTP Status Codes Cheat Sheet for API Testing](https://www.linkedin.com/posts/tanzimbpl_api-http-status-codes-activity-7506749684346929152-9ILE)** *(Ranked on Google Page 1 for API testing and QA search queries)*
+
+---
+
 ## 👨‍💻 Author & Official Profiles
 
 **Tanzim Rahman (TanzimSQA)**  
