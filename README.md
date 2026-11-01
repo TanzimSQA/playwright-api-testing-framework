@@ -3,6 +3,8 @@
 [![Playwright Python API Test Automation CI/CD](https://github.com/TanzimSQA/playwright-api-testing-framework/actions/workflows/api_tests.yml/badge.svg)](https://github.com/TanzimSQA/playwright-api-testing-framework/actions/workflows/api_tests.yml)
 [![GitHub Pages Report](https://img.shields.io/badge/Test%20Report-GitHub%20Pages-brightgreen?style=flat&logo=github)](https://tanzimsqa.github.io/playwright-api-testing-framework/)
 [![Schedule](https://img.shields.io/badge/Scheduled%20Run-10%3A00%20AM%20BST%20Everyday-blue)](https://github.com/TanzimSQA/playwright-api-testing-framework/actions)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Tanzim%20Rahman%20(TanzimSQA)-blueviolet?style=flat&logo=googlechrome&logoColor=white)](https://tanzimsqa.github.io/)
+[![Author](https://img.shields.io/badge/Author-Tanzim%20Rahman%20%7C%20Koy%20Jabo-darkgreen?style=flat&logo=github)](https://github.com/TanzimSQA)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![Playwright](https://img.shields.io/badge/Playwright-APIRequestContext-2EAD33?logo=playwright&logoColor=white)](https://playwright.dev/python/docs/api-testing)
 [![Pytest](https://img.shields.io/badge/Pytest-8.0%2B-0A9EDC?logo=pytest&logoColor=white)](https://docs.pytest.org/)
@@ -11,7 +13,8 @@
 
 An enterprise-grade, high-performance REST API test automation framework targeting [DummyJSON](https://dummyjson.com), developed with **Python**, **Playwright** (`APIRequestContext`), **Pytest**, and **Pydantic v2**, following the industry-standard **Service Object Model (SOM)** architecture pattern.
 
-> 🌐 **Live Interactive HTML Test Report**: [https://tanzimsqa.github.io/playwright-api-testing-framework/](https://tanzimsqa.github.io/playwright-api-testing-framework/)  
+> 🌐 **Author Portfolio**: [Tanzim Rahman (TanzimSQA) - Software Quality Assurance Engineer Portfolio](https://tanzimsqa.github.io/)  
+> 📊 **Live Interactive HTML Test Report**: [https://tanzimsqa.github.io/playwright-api-testing-framework/](https://tanzimsqa.github.io/playwright-api-testing-framework/)  
 > ⏰ **Automated Schedule**: Runs automatically every day at **10:00 AM Bangladesh Standard Time (BST, UTC+6)** / `04:00 UTC`.  
 > 📧 **Executive Email Alerts**: Automatically dispatches a responsive HTML KPI metrics report to QA Lead (`tanzimsqa@gmail.com`) upon test completion.
 
@@ -280,8 +283,8 @@ This project features an automated GitHub Actions pipeline (`.github/workflows/a
 ## 👨‍💻 Author & Official Profiles
 
 **Tanzim Rahman (TanzimSQA)**  
-*Software Quality Assurance (SQA) Engineer*  
-- 🌐 **Official Portfolio**: [https://tanzimsqa.github.io/](https://tanzimsqa.github.io/)  
+*Software Quality Assurance (SQA) Engineer at Koy Jabo*  
+- 🌐 **Official Portfolio**: [Tanzim Rahman (TanzimSQA) - Software Quality Assurance Engineer Portfolio](https://tanzimsqa.github.io/)  
 - 💼 **LinkedIn**: [https://www.linkedin.com/in/tanzimsqa/](https://www.linkedin.com/in/tanzimsqa/)  
 - 🐙 **GitHub**: [@TanzimSQA](https://github.com/TanzimSQA)  
 - 📘 **Facebook**: [https://www.facebook.com/tanzim.rahman.sqa/](https://www.facebook.com/tanzim.rahman.sqa/)  
@@ -290,7 +293,7 @@ This project features an automated GitHub Actions pipeline (`.github/workflows/a
 - 📍 **Location**: Dhaka, Bangladesh  
 
 <sub>
-  <b>Search Keywords:</b> <code>tanzim</code> • <code>tanzim rahman</code> • <code>tanzim rahman sqa</code> • <code>tanzim sqa</code> • <code>tanzimsqa</code>
+  <b>Search & Entity Keywords:</b> <code>tanzim</code> • <code>tanzim sqa</code> • <code>tanzimsqa</code> • <code>tanzim rahman</code> • <code>Tanzim Rahman SQA</code> • <code>SQA Engineer at Koy Jabo</code> • <code>SDET</code> • <code>Playwright</code> • <code>Python</code> • <code>Postman</code> • <code>API Testing</code> • <code>JMeter</code> • <code>Koy Jabo</code>
 </sub>
 
 ---
